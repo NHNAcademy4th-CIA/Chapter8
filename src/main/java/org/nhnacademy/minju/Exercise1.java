@@ -18,10 +18,12 @@ public class Exercise1 {
      */
     public static void exercise1() {
         Scanner scanner = new Scanner(System.in);
-        double n1, n2, n3;
+        double n1;
+        double n2;
+        double n3;
         String input;
 
-        try{
+        try {
             do {
                 logger.info("Enter equation");
                 logger.info("A = ");
@@ -47,7 +49,7 @@ public class Exercise1 {
      * if the discriminant, B*B - 4*A*C, is negative, then an exception
      * of type IllegalArgumentException is thrown.
      */
-    static public double root(double A, double B, double C)
+    private static double root(double A, double B, double C)
             throws IllegalArgumentException {
         if (A == 0) {
             throw new IllegalArgumentException("A can't be zero.");
