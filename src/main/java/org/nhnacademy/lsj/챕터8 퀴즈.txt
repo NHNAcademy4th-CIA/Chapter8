@@ -1,0 +1,224 @@
+Question 1:
+
+Why do programming languages require that variables be declared before they are used?
+What does this have to do with correctness and robustness?
+
+변수를 사용하기 전에 선언 함으로써 우리는 변수를 지칭하는 이름을 갖게 됩니다.
+
+즉 이 변수가 메모리의 어디에 위치하는지 정확한 값이 어떻게 되는지를 몰라도
+
+이름만으로 연산을 하는것이 가능해 집니다.
+하지만 선언만으로는 문제가 생기는데
+
+declaration , definition의 차이를 봐야 합니다.
+
+int num; 은 선언이고
+
+int num= 5 이렇게 초기화 까지 해 값을 가지고 있다면 정의입니다.
+
+자바는 선언과 정의를 동시에 하지 않아도 되기 떄문에
+값을 아예 갖지 않는 , 타입과 이름만 정해진 변수가 존재할 수 있기 떄문에
+
+선언과 정의를 동시에 하고 , 함수의 파라미터의 경우 항상 nullPointException을 체크하여
+
+correctness 와 robustness를 지켜야 합니다.
+
+
+
+Question 2:
+
+What is a precondition? Give an example.
+
+preCondition은 전제조건으로
+일반적으로 생성자가 생성될떄 혹은 함수의 파라미터가 들어왔을떄
+
+그 파라미터가 올바른 값인지 확인하는 것을 의미합니다
+
+만약 나누기 함수라면
+
+double div(double a,double b){
+    if(double==0)
+        throw new IllegalArgumentsException; 이렇게 예외를 처리해줘야 합니다.
+
+}
+
+
+
+Question 3:
+
+Explain how preconditions can be used as an aid in writing correct programs.
+
+위의 문제에서 설명 했듯이 전제조건을 지킴으로써
+
+함수에 원하지 않는 값이 들어갔을땨 , 혹은 생성자가 생성될떄
+
+그 함수와 생성자의 유효성을 검증할수 있습니다.
+즉 class invariants를 지키는 방법의 일종이라고 볼 수도 있습니다.
+
+
+Question 4:
+
+Find a useful loop invariant for the while loop in the binary search algorithm (Subsection 7.5.1).
+
+
+이진검색 코드는 보통 다음과 같습니다
+
+
+while(start<=end){
+
+    mit = (start+end)/2
+
+    찾는 값이 더 크면
+    start = mid+1;
+
+    찾는 값이 더 작으면
+    end= mid-1;
+
+    찾는 값이랑 같으면
+    return
+
+}
+
+여기서 loop invariants는 해당하는 범위내(start , end)에 찾는 값이 있다는 것입니다.
+
+가능한 인덱스 범위의 절반을 계속해서 버리면서 올바른 값을 찾습니다.
+
+만약 올바른 값을 찾지 못한 경우에 loop invariants는 찾는 값이 배열에 없음을 의미합니다.
+
+
+
+
+Question 5:
+
+Java has a predefined class called Throwable. What does this class represent? Why does it exist?
+
+
+Thrownalbe는 예외처리를 하기 위해 만들어 졌습니다.
+모든 예외는 Thrownable이 서브 타입입니다.
+
+예외가 발생하면 해당 예외 유형의 클래스가 생성됩니다.
+
+Ex) throw new IllegalArgumentsException();
+
+이런식으로 new 를 해서 만들어주는 것
+
+따라서 Thrownable의 서브 타입이란 것은 예외처리가 가능하다는 것을 의미합니다.(Error 클래스 제외)
+
+
+Question 6:
+
+Write a method that prints out a 3N+1 sequence starting from a given integer,
+N. The starting value should be a parameter to the method.
+If the parameter is less than or equal to zero, throw an IllegalArgumentException.
+If the number in the sequence becomes too large to be represented as a value of type int,
+throw an ArithmeticException.
+
+
+int 함수 (int N){
+
+    if(N<=0)
+        throw new IllegalArgumentsException();
+
+    N짝수면 함수(N/2)
+    N홀수면 함수(N*3+1)
+    만약 1이면 return;
+
+}
+
+
+Question 7:
+
+Rewrite the method from the previous question, using assert statements instead of exceptions
+to check for errors. What is the difference between the two versions of the method
+when the program is run?
+
+
+int 함수 (int N){
+
+    assert N<=0: throw new IllegalArgumentsException();
+
+    N짝수면 함수(N/2)
+    N홀수면 함수(N*3+1)
+    만약 1이면 return;
+
+}
+
+차이점은 preCondition을 체크하는 방식
+
+
+
+
+
+Question 8:
+
+Some classes of exceptions are checked exceptions that require mandatory exception handling.
+Explain what this means.
+
+
+checked exception 은 필수적으로 예외처리를 해줘야 합니다.
+static time에 발생하는 예외들이 이곳에 속합니다.
+
+
+
+Question 9:
+
+Consider a subroutine processData() that has the header
+
+static void processData() throws IOException
+Write a try..catch statement that calls this subroutine and prints an error message
+if an IOException occurs.
+
+
+
+
+
+Question 10:
+
+Why should a subroutine throw an exception when it encounters an error?
+Why not just terminate the program?
+
+예외가 발생할때마다 프로그램이 종료된다면
+사용자가 매우 큰 불편을 느낄것 입니다.
+
+예를들어 계좌번호를 잘못 입력했다고 앱 자체자 종료된다면 서비스 할 수 없는 수준일 것입니다.
+
+
+
+Question 11:
+
+Suppose that you have a choice of two algorithms that perform the same task.
+One has average-case run time that is Θ(n2) while the run time of the second algorithm
+has an average-case run time that is Θ(n*log(n)). Suppose that you need to process an input of size
+n = 100. Which algorithm would you choose?
+Can you be certain that you are choosing the fastest algorithm for the input that
+you intend to process?
+
+n^2보다 nlogn을 선택하겠습니다.
+이유는 그냥 이게더 빠른거임;;
+
+10000 vs 200 이잖아
+
+
+
+
+
+Question 12:
+
+Analyze the run time of the following algorithm. That is, find a function f(n)
+such that the run time of the algorithm is O(f(n)) or, better, Θ(f(n)).
+Assume that A is an array of integers, and use the length of the array as the input size, n.
+
+int total = 0;
+for (int i = 0; i < A.length; i++) {
+   if (A[i] > 0)
+      total = total + A[i];
+}
+
+이건 o(n)
+
+
+
+
+
+
+
