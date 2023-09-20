@@ -16,14 +16,14 @@ public class Quiz4 {
      * 최초의 입력식 f(x)를받으며
      * 다음부터는 x에 들어갈값을 받게된다.
      */
-    public Quiz4(){
+    public Quiz4() {
         String line;
         double x;
         double val;
 
         logger.info("f(x)공식을 쓰세요. x만 작성이 가능합니다.");
 
-        while(true) {
+        while (true) {
             logger.info("종료를 원하시면 공백을 치시면됩니다.");
             logger.info("f(x)=");
             line = scanner.nextLine();
@@ -37,22 +37,21 @@ public class Quiz4 {
             }
             while (true) {
                 logger.info("종료를 원하면 공백을 치세요.");
-               logger.info("\nx = ");
+                logger.info("\nx = ");
                 line = scanner.nextLine();
                 if (line.isEmpty())
                     break;
                 try {
                     x = Double.parseDouble(line);
-                }
-                catch (NumberFormatException e) {
-                    logger.warn("\"{}\" is not a legal number.",line);
+                } catch (NumberFormatException e) {
+                    logger.warn("\"{}\" is not a legal number.", line);
                     continue;
                 }
                 val = expression.value(x);
                 if (Double.isNaN(val))
-                    logger.info("f( {} ) is undefined.",x);
+                    logger.info("f( {} ) is undefined.", x);
                 else
-                    logger.info("f( {} ) = {}",x,val);
+                    logger.info("f( {} ) = {}", x, val);
             }
         }
 
@@ -117,6 +116,7 @@ class Expr {
      * Computes the value of this expression, when the variable x
      * has a specified value.  If the expression is undefined
      * for the specified value of x, then Double.NaN is returned.
+     *
      * @param x the value to be used for the variable x in the expression
      * @return the computed value of the expression
      */
@@ -126,7 +126,7 @@ class Expr {
 
     /**
      * Return the original definition string of this expression.  This
-     *  is the same string that was provided in the constructor.
+     * is the same string that was provided in the constructor.
      */
     public String toString() {
         return definition;
@@ -147,17 +147,17 @@ class Expr {
 
 
     private static final byte  // values for code array; values >= 0 are indices into constants array
-            PLUS = -1,   MINUS = -2,   TIMES = -3,   DIVIDE = -4,  POWER = -5,
-            SIN = -6,    COS = -7,     TAN = -8,     COT = -9,     SEC = -10,
-            CSC = -11,   ARCSIN = -12, ARCCOS = -13, ARCTAN = -14, EXP = -15,
-            LN = -16,    LOG10 = -17,  LOG2 = -18,   ABS = -19,   SQRT = -20,
+            PLUS = -1, MINUS = -2, TIMES = -3, DIVIDE = -4, POWER = -5,
+            SIN = -6, COS = -7, TAN = -8, COT = -9, SEC = -10,
+            CSC = -11, ARCSIN = -12, ARCCOS = -13, ARCTAN = -14, EXP = -15,
+            LN = -16, LOG10 = -17, LOG2 = -18, ABS = -19, SQRT = -20,
             UNARYMINUS = -21, VARIABLE = -22;
 
 
-    private static String[] functionNames =  {  // names of standard functions, used during parsing
+    private static String[] functionNames = {  // names of standard functions, used during parsing
             "sin", "cos", "tan", "cot", "sec",
             "csc", "arcsin", "arccos", "arctan", "exp",
-            "ln", "log10", "log2", "abs", "sqrt" };
+            "ln", "log10", "log2", "abs", "sqrt"};
 
 
     private double eval(double variable) { // evaluate this expression for this value of the variable
@@ -171,39 +171,79 @@ class Expr {
                     double x = stack[--top];
                     double ans = Double.NaN;
                     switch (code[i]) {
-                        case PLUS:    ans = x + y;  break;
-                        case MINUS:   ans = x - y;  break;
-                        case TIMES:   ans = x * y;  break;
-                        case DIVIDE:  ans = x / y;  break;
-                        case POWER:   ans = Math.pow(x,y);  break;
+                        case PLUS:
+                            ans = x + y;
+                            break;
+                        case MINUS:
+                            ans = x - y;
+                            break;
+                        case TIMES:
+                            ans = x * y;
+                            break;
+                        case DIVIDE:
+                            ans = x / y;
+                            break;
+                        case POWER:
+                            ans = Math.pow(x, y);
+                            break;
                     }
                     if (Double.isNaN(ans))
                         return ans;
                     stack[top++] = ans;
-                }
-                else if (code[i] == VARIABLE) {
+                } else if (code[i] == VARIABLE) {
                     stack[top++] = variable;
-                }
-                else {
+                } else {
                     double x = stack[--top];
                     double ans = Double.NaN;
                     switch (code[i]) {
-                        case SIN: ans = Math.sin(x);  break;
-                        case COS: ans = Math.cos(x);  break;
-                        case TAN: ans = Math.tan(x);  break;
-                        case COT: ans = Math.cos(x)/Math.sin(x);  break;
-                        case SEC: ans = 1.0/Math.cos(x);  break;
-                        case CSC: ans = 1.0/Math.sin(x);  break;
-                        case ARCSIN: if (Math.abs(x) <= 1.0) ans = Math.asin(x);  break;
-                        case ARCCOS: if (Math.abs(x) <= 1.0) ans = Math.acos(x);  break;
-                        case ARCTAN: ans = Math.atan(x);  break;
-                        case EXP: ans = Math.exp(x);  break;
-                        case LN: if (x > 0.0) ans = Math.log(x);  break;
-                        case LOG2: if (x > 0.0) ans = Math.log(x)/Math.log(2);  break;
-                        case LOG10: if (x > 0.0) ans = Math.log(x)/Math.log(10);  break;
-                        case ABS: ans = Math.abs(x);  break;
-                        case SQRT: if (x >= 0.0) ans = Math.sqrt(x);  break;
-                        case UNARYMINUS: ans = -x; break;
+                        case SIN:
+                            ans = Math.sin(x);
+                            break;
+                        case COS:
+                            ans = Math.cos(x);
+                            break;
+                        case TAN:
+                            ans = Math.tan(x);
+                            break;
+                        case COT:
+                            ans = Math.cos(x) / Math.sin(x);
+                            break;
+                        case SEC:
+                            ans = 1.0 / Math.cos(x);
+                            break;
+                        case CSC:
+                            ans = 1.0 / Math.sin(x);
+                            break;
+                        case ARCSIN:
+                            if (Math.abs(x) <= 1.0) ans = Math.asin(x);
+                            break;
+                        case ARCCOS:
+                            if (Math.abs(x) <= 1.0) ans = Math.acos(x);
+                            break;
+                        case ARCTAN:
+                            ans = Math.atan(x);
+                            break;
+                        case EXP:
+                            ans = Math.exp(x);
+                            break;
+                        case LN:
+                            if (x > 0.0) ans = Math.log(x);
+                            break;
+                        case LOG2:
+                            if (x > 0.0) ans = Math.log(x) / Math.log(2);
+                            break;
+                        case LOG10:
+                            if (x > 0.0) ans = Math.log(x) / Math.log(10);
+                            break;
+                        case ABS:
+                            ans = Math.abs(x);
+                            break;
+                        case SQRT:
+                            if (x >= 0.0) ans = Math.sqrt(x);
+                            break;
+                        case UNARYMINUS:
+                            ans = -x;
+                            break;
                     }
                     if (Double.isNaN(ans))
                         return ans;
@@ -211,8 +251,7 @@ class Expr {
 
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return Double.NaN;
         }
         if (Double.isInfinite(stack[0]))
@@ -236,8 +275,7 @@ class Expr {
                 s++;
                 if (s > max)
                     max = s;
-            }
-            else if (code[i] >= POWER)
+            } else if (code[i] >= POWER)
                 s--;
         }
         return max;
@@ -258,10 +296,10 @@ class Expr {
         int stackSize = computeStackUsage();
         stack = new double[stackSize];
         byte[] c = new byte[codeSize];
-        System.arraycopy(code,0,c,0,codeSize);
+        System.arraycopy(code, 0, c, 0, codeSize);
         code = c;
         double[] A = new double[constantCt];
-        System.arraycopy(constants,0,A,0,constantCt);
+        System.arraycopy(constants, 0, A, 0, constantCt);
         constants = A;
     }
 
@@ -273,7 +311,7 @@ class Expr {
     }
 
     private void skip() {  // skip over white space in data
-        while(Character.isWhitespace(next()))
+        while (Character.isWhitespace(next()))
             pos++;
     }
 
@@ -295,7 +333,7 @@ class Expr {
             char op = next();
             pos++;
             parseTerm();
-            code[codeSize++] = (op == '+')? PLUS : MINUS;
+            code[codeSize++] = (op == '+') ? PLUS : MINUS;
             skip();
         }
     }
@@ -307,7 +345,7 @@ class Expr {
             char op = next();
             pos++;
             parseFactor();
-            code[codeSize++] = (op == '*')? TIMES : DIVIDE;
+            code[codeSize++] = (op == '*') ? TIMES : DIVIDE;
             skip();
         }
     }
@@ -329,8 +367,7 @@ class Expr {
         if (ch == 'x' || ch == 'X') {
             pos++;
             code[codeSize++] = VARIABLE;
-        }
-        else if (Character.isLetter(ch))
+        } else if (Character.isLetter(ch))
             parseWord();
         else if (Character.isDigit(ch) || ch == '.')
             parseNumber();
@@ -341,8 +378,7 @@ class Expr {
             if (next() != ')')
                 error("Expected a right parenthesis.");
             pos++;
-        }
-        else if (ch == ')')
+        } else if (ch == ')')
             error("Unmatched right parenthesis.");
         else if (ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '^')
             error("Operator '" + ch + "' found in an unexpected position.");
@@ -370,7 +406,7 @@ class Expr {
                 if (next() != ')')
                     error("Missing right parenthesis after parameter of function '" + w + "'.");
                 pos++;
-                code[codeSize++] = (byte)(SIN - i);
+                code[codeSize++] = (byte) (SIN - i);
                 return;
             }
         }
@@ -400,7 +436,7 @@ class Expr {
                 w += next();
                 pos++;
             }
-            if (! Character.isDigit(next()))
+            if (!Character.isDigit(next()))
                 error("Illegal number found, with no digits in its exponent.");
             while (Character.isDigit(next())) {
                 w += next();
@@ -410,12 +446,11 @@ class Expr {
         double d = Double.NaN;
         try {
             d = Double.valueOf(w).doubleValue();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
         }
         if (Double.isNaN(d))
             error("Illegal number '" + w + "' found in data.");
-        code[codeSize++] = (byte)constantCt;
+        code[codeSize++] = (byte) constantCt;
         constants[constantCt++] = d;
     }
 
