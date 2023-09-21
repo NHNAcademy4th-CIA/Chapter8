@@ -12,11 +12,6 @@ public class Problem2 {
 
     private static final Logger logger = LoggerFactory.getLogger(Problem2.class);
 
-    private static final BigInteger TWO = new BigInteger("2");
-    private static final BigInteger ONE = new BigInteger("1");
-    private static final BigInteger ZERO = new BigInteger("0");
-
-
     /**
      * 3N+1 문제풀이.
      */
@@ -31,7 +26,7 @@ public class Problem2 {
             try {
                 bigInteger = new BigInteger(sc.nextLine());
                 if (!bigInteger.equals(bigInteger.abs())) {
-                    throw new IllegalArgumentException();
+                    throw new IllegalArgumentException(); // numberformat Exception
                 }
                 break;
             } catch (IllegalArgumentException e) {
@@ -55,13 +50,13 @@ public class Problem2 {
 
         logger.info("{}", bigInteger);
 
-        if (bigInteger.equals(ONE)) {
+        if (bigInteger.equals(BigInteger.ONE)) {
             return;
         }
 
-        if (bigInteger.remainder(TWO).equals(ZERO)) {
+        if (bigInteger.remainder(BigInteger.TWO).equals(BigInteger.ZERO)) {
             solve3N(bigInteger.divide(BigInteger.valueOf(2)));
-        } else if (bigInteger.remainder(TWO).equals(ONE)) {
+        } else if (bigInteger.remainder(BigInteger.TWO).equals(BigInteger.ONE)) {
             solve3N(bigInteger.multiply(BigInteger.valueOf(3)).add(BigInteger.valueOf(1)));
         }
 
