@@ -12,6 +12,7 @@ public class Problem4 {
 
     private static final Logger logger = LoggerFactory.getLogger(Problem4.class);
 
+
     /**
      * 수식입력받기 -> 숫자 입력받기 -> 결과 출력 , 각 단계는 모두 예외처리 .
      */
@@ -22,53 +23,63 @@ public class Problem4 {
         String count;
 
 
+
         Expr func;
 
         while (true) {
-            logger.info("수식을 입력해 주세요");
-            try {
-                func = new Expr(sc.nextLine());
-                break;
-            } catch (IllegalArgumentException e) {
-                logger.warn("표현식에 오류가 있습니다\n다시 입력해주세요");
+
+            while (true) {
+                logger.info("수식을 입력해 주세요");
+                try {
+                    func = new Expr(sc.nextLine());
+                    break;
+                } catch (IllegalArgumentException e) {
+                    logger.warn("표현식에 오류가 있습니다\n다시 입력해주세요");
+                }
             }
-        }
-
-        do {
-            logger.info("입력할 개수를 정해주세요");
-            count = sc.nextLine();
-
-        } while (!isValidate(count, true));
-
-        int size = Integer.parseInt(count);
-
-        double[] arr = new double[size];
-
-
-        for (int i = 0; i < size; i++) {
-
-            String number;
 
             do {
-                logger.info("수를 입력해 주세요 남은 입력 {}", size - i);
-                number = sc.nextLine();
+                logger.info("입력할 개수를 정해주세요");
+                count = sc.nextLine();
 
-            } while (!isValidate(number, false));
+            } while (!isValidate(count, true));
 
-            arr[i] = Double.parseDouble(number);
+            int size = Integer.parseInt(count);
 
-        }
+            double[] arr = new double[size];
 
-        double num;
-        for (int i = 0; i < size; i++) {
 
-            num = func.value(arr[i]);
+            for (int i = 0; i < size; i++) {
 
-            if (Double.isNaN(num)) {
-                logger.info("입력에 대한 표현식이 정의되지 않았습니다.");
-                continue;
+                String number;
+
+                do {
+                    logger.info("수를 입력해 주세요 남은 입력 {}", size - i);
+                    number = sc.nextLine();
+
+                } while (!isValidate(number, false));
+
+                arr[i] = Double.parseDouble(number);
+
             }
-            logger.info("{}", func.value(arr[i]));
+
+            double num;
+            for (int i = 0; i < size; i++) {
+
+                num = func.value(arr[i]);
+
+                if (Double.isNaN(num)) {
+                    logger.info("입력에 대한 표현식이 정의되지 않았습니다.");
+                    continue;
+                }
+                logger.info("{}", func.value(arr[i]));
+            }
+
+            logger.info("다시 수식 입력을 받겠습니까?\n그렇다면 Y,아니면 아무 키나 눌러주세요");
+
+            if(!sc.nextLine().equals("Y"))
+                break;
+
         }
     }
 
@@ -81,10 +92,10 @@ public class Problem4 {
      */
     public static boolean isValidate(String str, boolean flag) {
         try {
-            if (!Character.isDigit(str.charAt(0))) {
+            if (!str.chars().allMatch(Character::isDigit)) {
                 throw new IllegalArgumentException();
             }
-            if (flag) {
+            if (flag) { // 숫자로 바꿀때 안터지는지
                 Integer.parseInt(str);
             }
             return true;
