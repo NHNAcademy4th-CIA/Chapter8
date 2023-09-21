@@ -12,6 +12,7 @@ public class Problem4 {
 
     private static final Logger logger = LoggerFactory.getLogger(Problem4.class);
 
+
     /**
      * 수식입력받기 -> 숫자 입력받기 -> 결과 출력 , 각 단계는 모두 예외처리 .
      */
@@ -20,6 +21,7 @@ public class Problem4 {
         Scanner sc = new Scanner(System.in);
 
         String count;
+
 
 
         Expr func;
@@ -90,7 +92,7 @@ public class Problem4 {
      */
     public static boolean isValidate(String str, boolean flag) {
         try {
-            if (!Character.isDigit(str.charAt(0))) { // 0번째 index만 체크함
+            if (!str.chars().allMatch(Character::isDigit)) { /
                 throw new IllegalArgumentException();
             }
             if (flag) { // 숫자로 바꿀때 안터지는지
