@@ -92,7 +92,7 @@ public class Problem4 {
      */
     public static boolean isValidate(String str, boolean flag) {
         try {
-            if (!str.chars().allMatch(Character::isDigit)) { /
+            if (!str.chars().allMatch(Character::isDigit)) {
                 throw new IllegalArgumentException();
             }
             if (flag) { // 숫자로 바꿀때 안터지는지
