@@ -1,0 +1,238 @@
+Introduction to Correctness and Robustness
+
+자바에서는 null값이 존재해
+이거 왜 존재하는 걸까?
+
+자바는 변수의 선언만 할 수 있어 
+즉 선언과 정의가 별도의 것이야
+
+예를들어 String str;
+이런식으로 값 을 할당 안하고
+변수의 이름과 타입만 선언할 수 있는 거지
+
+근데 이러면 문제가 생김 , 얘는 타입이랑 이름만 존재하는 애야
+
+어떠한 값도 갖고있지않고 어떠한 것도 가르키지 않아
+
+따라서 이런 경우에는 null이 발생해
+
+이러한 것들은 따로 체크를 해줘야 합니다 .
+
+
+buffer overflow 
+
+한 컴퓨터가 네트워크를 통해 다른 컴퓨터로부터 데이터를 받으면 해당 데이터는 버퍼에 저장됩니다.
+버퍼는 수신할 것으로 예상되는 데이터를 보관하기 위해 프로그램에서 할당한 
+메모리 세그먼트일 뿐입니다. 버퍼에 들어갈 수 있는 것보다 더 많은 데이터가 수신되면 
+버퍼 오버플로가 발생합니다. 
+
+자바는 수치계산에서 오류가 발생할 수 있음.
+
+int 의 경우 21억정도가 max값인데
+
+int num = 20억+20억 하면 integer overflow가 발생함 
+
+근데 자바에서는 이걸 오류로 생각하지 않아 
+MAX값 넘어버리면 자동으로 MIN값으로 변경돼
+
+21억+연산 -> -21억 
+ 
+따라서 이런걸 잡기가 번거러워
+
+double같은 부동소수점도 머리가 아픈데
+double은 완벽하게 값을 갖고있는게 아니야
+
+낮은 단위까지 가면 오차가 발생해
+따라서 1.1+0.1 == 1.2  이런 수식이 false가 발생하는 것 
+
+Writing Correct Programs
+
+입증 가능한 올바른 프로그램
+기본적인 아이디어는 process 와 state로 구성
+
+state= 상태 는 프로그램 실행 중 특정 순간의 프로그램 실행과 관련된
+모든 정보로 구성됩니다. 변수값 , 출력 , 입력 등등..
+
+예를들어 
+
+do {
+   System.out.print("Enter a positive integer: ");
+   N = TextIO.getlnInt();
+} while (N <= 0);
+
+다음과 같다면 N은 0보다 크다는 것이 입증됩니다.
+안그러면 무한 루프니까 
+
+
+Preconditions and Postconditions
+
+전제조건, 사후조건
+
+Post Condition = 프로그램이 실행 된 후에 그 결과가 참이라고 입증 할 수 있는 사실 
+
+즉 결과값과 관련된 것임
+
+Pre Condition = 프로그램 실행 전의 조건이야 
+
+주로 함수로 넘기는 파라미터 , 입력의 범위 등이 포함됨
+
+
+
+Invariants
+
+불변성을 의미함 , 바뀌지 않는 , 유효한 상태를 의미함
+
+
+
+Loop Invariant (루프 불변성) 은 루프에서 모든 반복 시 항상 참이여야 하는 성질을 의미함
+
+모든 지점에서 항상 ture가 아니여도 된다 , 루프의 명령이 끝난 후 true상태가 유지된다면 일시적으로 false여도 상관 없음
+
+int sum=0;
+for(int i=1;i<10;i++){
+    sum+=i;
+}
+
+여기서 Loop invariant 는 sum은 i요소의 합이라는 것 입니다.
+
+
+ Loop invariant는 루프 이전에 참이고 루프가 끝나면 , Loop invariant는 Loop를 끝내는 statement가 됩니다.
+
+
+또 다른 불변성이 존재 합니다.
+
+class invariant , 클래스 불변성
+
+클래스 불변성은 클래스의 상태 또는 해당 클래스에서 생성된 객체에 대해 항상 참인 것 입니다.
+
+만약 주사위class라면 이 class는 항상 1~6사이의 값을 가져야 합니다.
+이것이 class invariant 입니다.
+
+또한 항상 이것이 지켜짐을 보장해야합니다.
+
+따라서 생성자 생성시 따로 체크하거나 , 메서드 실행시 항상 체크를 해주는 것이 맞습니다.
+
+
+
+Robust Handling of Input
+(강력한 입력처리)
+
+
+우리는 오류처리에 대한 기능을 갖고있음
+사용자가 잘못된 값을 입력하면 에러발생으로 코드가 돌아가지도 않음
+
+이외에도 다양한 예외처리 기능이 있는데
+
+
+Exceptions and try..catch
+
+
+프로그램이 비정상적인 입력을 받거나 예기치 못한 실행을 하게 됐을때 따로 처리를 해줘야 함
+그래야 robust하게 만들 수 있음
+
+이러한 기술들을 Exception handling 라고 말해
+
+우리는 프로그램 실행중 예외가 발생하면 예외가 thrown 됐다고 말함
+
+그럼 이 예외를 catch 해서 잡아줘야 해
+
+이런 Exception이 발생하면 예외를 던지는 것은 객체야 , 이 객체는 예외가 발생한 지점부터 예외가 포착되어
+처리되는 지점까지 정보를 전달함.
+
+이 정보에는 예외가 발생했을 때 실행중이던 subroutine call stack이 항상 포함 됨.
+
+가장 크게 두가지 예외 유형이 있는데 Error Class와 Exception Class임
+
+이 둘은 Thrownable의 sub class
+
+Error 클래스는 발생시 프로그램 종료를 초래하는 심각한 오류임 , 이런 건 예외처리 할 방법이 없음
+java class 를 읽어오지 못하는 ClassFormatError가 존재함 , 이런 경우 프로그램을 진행할 방법이 없음
+
+반면에 Exception클래스는 catch해줄 수 있음
+
+대표적인게 IllegalArgumentsException , NullPointException  등등.
+
+예외를 잡는건
+
+trt-catch 문을 사용해서 잡을수 있음
+
+이 경우에 에러가 터지면 catch에서 잡는 형식임
+
+finally라는 옵션도 있는데
+
+이 경우 에러가 터지든 안터지든 무조건 실행이 되는 subroutine입니다.
+
+
+
+
+
+Mandatory Exception Handling
+
+
+IllegalArguments Exception 같은 것은
+잠재적인 가능성임 , 즉 예외처리가 필수는 아니야
+
+하지만 필수적으로 예외처리를 해야하는 경우가 있어
+
+이를 Chceked Exception 이라고 함
+
+Runtime Exception이 아닌 경우 모두 checked Exception입니다.
+
+반대로 모든 Runtime Exception은 unchecked Exception 입니다.
+
+Runtime Exception이란
+말 그대로 실행시간에 발생하는 에러다
+즉 컴파일하고 실행하는데는 문제가 없었지만
+
+실행도중에 문제가 생기면 그건 전부 Runtime Exception이다.
+즉 dynamic time 에 잡히는 에러다.
+
+
+반면에 checked Exception은
+
+컴파일러가 체크하는 예외다 , 즉 static time 에 잡히는 에러이다.
+
+
+
+
+Assertions and Annotations
+
+
+Assertions 는 자바에서 제공하는 테스트 기능임
+
+preCondition이나 postCondition이 똑바로 들어 왔는지 확인할때
+
+assert 확인하는 코드  이런식으로 사용 가능함
+
+하지만 보통 실제로 사용할떄는 Junit5를 사용한
+
+Assertions를 사용하기 떄문에 실제로 쓸 일은 크게 없다.
+
+
+Annotations은 일반적으로 코드르 이해하기 쉽게 만들기위해
+작성된 메모입니다.
+
+일반적으로 생각되는 주석은 프로그램 실행과 아무런 연관이 없지만
+spring 같은 프레임워크에서는 주석을 담으로써 실질적인 기능을 추가할 수 있습니다.
+
+
+
+
+Analysis of Algorithms
+
+여태까지는 프로그램의 정확성 , 견고성을 봤다면
+
+지금은 efficiency(효율성)을 체크합니다.
+
+보통 효율성을 볼떄는 Big-Oh 표기법을 사용합니다.
+
+이는 특정한 알고리즘이 실행됐을떄 최악의 경우
+
+즉 가장 많은 시간이 걸리는 경우를 알고리즘 시간에 표준으로 생각합니다.
+
+또한 간단한 계산을 위해 가장 큰 차수를 제외한 나머지는 버려집니다.
+
+일반적으로 for , while 같은 loop는 o(N)으로 처리합니다.
+
+대표적인 정렬인 bubble 정렬의 경우 o(N^2)입니다.
+
