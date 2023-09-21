@@ -1,0 +1,83 @@
+Question 1:Why do programming languages require that variables be declared before they are used? What does this have to do with correctness and robustness?
+- 실수로 인해 생성할 의도가 없었던 추가 변수가 발생할 수 있다
+- 효율성을 제한함으로써 correctness와 robustness를 증가시킨다
+
+Question 2:What is a precondition? Give an example.
+- 프로그램이 정확하기를 원한다면 참이 되도록 강제해야 되는 조건
+- 프로그램이 올바르게 계속되기 위해 프로그램 실행 중 특정 시점에 참이어야 하는 조건
+- 예) `A*x^2+ B*x + C = 0` 에서 전제 조건은
+    `B**B-4*A*C >= 0` , `A ≠ 0`
+
+Question 3:Explain how preconditions can be used as an aid in writing correct programs.
+- 전제조건의 정의 자체가 프로그램이 정확하기를 위한다면 참이 되도록 강제하는 조건이므로 전제조건이 충족되지 않으면 프로그램에 오류가 발생할 수 있음
+
+Question 4:Find a useful loop invariant for the while loop in the binary search algorithm (Subsection 7.5.1).
+- 이 서브루틴이 작동하는지 어떻게 확신할 수 있나요? return 문이 실행될 때 A 배열에 N 값이 있음을 증명해야 합니다.
+- 루프 불변이란 루프가 실행될 때 참으로 유지되는 명령문
+- N이 발견되면 루프가 종료된다
+- 루프 불변성은 배열이 N 값을 갖고 있는 것
+
+Question 5:Java has a predefined class called Throwable. What does this class represent? Why does it exist?
+- try-catch문에 의해 잡힐 수 있는 모든 객체
+- 예외를 포착하여 처리함으로써 충돌을 피하고 프로그램의 종료를 막을 수 있다
+
+Question 6:Write a method that prints out a 3N+1 sequence starting from a given integer, N. The starting value should be a parameter to the method. If the parameter is less than or equal to zero, throw an IllegalArgumentException. If the number in the sequence becomes too large to be represented as a value of type int, throw an ArithmeticException.
+void 3N+1(int N) {
+	if(N<=0) throw new IllegalArgumentException("");
+	if(N>Integer.MAX_VALUE) throw new ArithmeticException("");
+	while ( N != 1 ) {
+	   if ( N % 2 == 0 )  // If N is even...
+	      N = N / 2;
+	   else
+	      N = 3 * N + 1;
+	   System.out.println(N);
+	}
+}
+
+
+Question 7:Rewrite the method from the previous question, using assert statements instead of exceptions to check for errors. What is the difference between the two versions of the method when the program is run?
+- assert문이 실행되려면 debugging 이 필요하다
+void 3N+1(int N) {
+	assert N>0: "";
+	assert (N>Integer.MAX_VALUE): "";
+	while ( N != 1 ) {
+	   if ( N % 2 == 0 )  // If N is even...
+	      N = N / 2;
+	   else
+	      N = 3 * N + 1;
+	   System.out.println(N);
+	}
+}
+
+Question 8:Some classes of exceptions are checked exceptions that require mandatory exception handling. Explain what this means.
+- 필수 처리가 필요한 예외로 루틴의 표제에 throws절이 공지되어야 한다
+
+Question 9:Consider a subroutine processData() that has the header
+
+static void processData() throws IOException
+Write a try..catch statement that calls this subroutine and prints an error message if an IOException occurs.
+
+try {
+	processData();
+}
+catch(IOException e) {
+	System.out.println("e.getMessage());
+}
+
+Question 10:Why should a subroutine throw an exception when it encounters an error? Why not just terminate the program?
+- 서브루틴에 문제가 있음을 프로그래머에게 알리기 위해서
+
+Question 11:Suppose that you have a choice of two algorithms that perform the same task. One has average-case run time that is Θ(n2) while the run time of the second algorithm has an average-case run time that is Θ(n*log(n)). Suppose that you need to process an input of size n = 100. Which algorithm would you choose? Can you be certain that you are choosing the fastest algorithm for the input that you intend to process?
+- O(n*log(n))
+- n에 대해 n*log(n)이 n^2보다 작기 때문
+
+Question 12:Analyze the run time of the following algorithm. That is, find a function f(n) such that the run time of the algorithm is O(f(n)) or, better, Θ(f(n)). Assume that A is an array of integers, and use the length of the array as the input size, n.
+
+int total = 0;
+for (int i = 0; i < A.length; i++) {
+   if (A[i] > 0)
+      total = total + A[i];
+}
+
+- O(n)
+- A.length(n)만큼 루프를 한 번 돌리기 때문이다
