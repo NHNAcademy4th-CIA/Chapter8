@@ -45,6 +45,10 @@ class ThreeNPlusOne {
     public ThreeNPlusOne(String value) {
         try {
             this.value = new BigInteger(value);
+            if(this.value.signum()==-1)
+            {
+                return;
+            }
         } catch (NumberFormatException e) {
             logger.info(e.toString());
         }

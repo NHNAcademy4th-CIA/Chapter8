@@ -29,6 +29,8 @@ public class Quiz3 {
  */
 class Roma {
     private Logger logger = LoggerFactory.getLogger(Roma.class);
+    private int arabian;
+    private String roma;
     /***
      *  M    1000            X   10
      * CM    900            IX   9
@@ -49,17 +51,18 @@ class Roma {
         charterTable = new HashMap<>();
         tableInit();
         int num;
-        try {
-            num = Integer.parseInt(line);
-        } catch (NumberFormatException e) {
+
+        if (!line.chars().allMatch(Character::isDigit)) {
             int arabian = toArabian(line);
             if (arabian == 0) {
                 logger.warn("roma글자가 아닌 글자가 있습니다");
             }
-            logger.info("{}", arabian);
+            logger.info("{}", toInt());
             return;
         }
-        logger.info(toRoma(num));
+        num = Integer.parseInt(line);
+
+        logger.info(toString());
     }
 
     /***
@@ -96,6 +99,7 @@ class Roma {
         stringBuilder.append(thousandEtc(num, 10));
         num %= 10;
         stringBuilder.append(thousandEtc(num, 1));
+        roma = stringBuilder.toString();
         return stringBuilder.toString();
     }
 
@@ -154,7 +158,7 @@ class Roma {
     private int toArabian(String value) {
         int answer = 0;
         Stack<Character> stack = new Stack<>();
-        for (int i = value.length() - 1; i >= 0; i--) {
+        for (int i =0; i < value.length(); i++) {
             logger.info("{}", value.charAt(i));
             stack.push(value.charAt(i));
         }
@@ -164,6 +168,7 @@ class Roma {
             try {
                 afterValue = serachTable(stack.peek());
             } catch (EmptyStackException e) {
+                logger.warn("마지막 자리입니다");
                 afterValue = baseValue;
             }
             logger.info("{} {}", baseValue, afterValue);
@@ -177,6 +182,7 @@ class Roma {
             }
             answer += baseValue;
         }
+        arabian = answer;
         return answer;
     }
 
@@ -192,6 +198,15 @@ class Roma {
             }
         }
         return 0;
+    }
+
+    public int toInt() {
+        return arabian;
+    }
+
+    @Override
+    public String toString() {
+        return roma;
     }
 
 }
