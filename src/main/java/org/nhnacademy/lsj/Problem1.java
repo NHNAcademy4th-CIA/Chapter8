@@ -31,7 +31,6 @@ public class Problem1 {
                 continue;
             }
 
-
             logger.info("새로운 방정식의 해를 구하겠습니까 Press:Y or N");
 
             if (!isReTry()) {
@@ -46,21 +45,13 @@ public class Problem1 {
      * @return true ,false.
      */
     public static boolean isReTry() {
-        String retry = sc.nextLine(); // 버퍼제
+        String retry = sc.nextLine(); // 버퍼제거
 
-        try {
-            if (!retry.equals("Y") && !retry.equals("N")) {
-                logger.warn("잘못된 입력입니다\n다시 입력해 주세요");
-                throw new IllegalArgumentException();
-            }
-        } catch (IllegalArgumentException e) {
-            isReTry();
-        }
 
-        if (retry.equals("Y")) {
-            return true;
+        if (retry.equals("N")) { // Y 처리
+            return false;
         }
-        return false;
+        return true;
     }
 
 
