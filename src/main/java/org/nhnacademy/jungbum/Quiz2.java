@@ -51,6 +51,10 @@ class ThreeNPlusOne {
         printCount();
     }
 
+    /***
+     * 짝수인가요?
+     * @return 짝수 = true
+     */
     public boolean isEven() {
         if (value.mod(TWO).equals(ONE)) {
             return false;
@@ -58,6 +62,9 @@ class ThreeNPlusOne {
         return true;
     }
 
+    /***
+     * print 메소드.
+     */
     public void printCount() {
         int count = 0;
         while (!value.equals(ONE)) {
