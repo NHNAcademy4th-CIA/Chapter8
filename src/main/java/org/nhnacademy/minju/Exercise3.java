@@ -1,7 +1,6 @@
 package org.nhnacademy.minju;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import org.slf4j.Logger;
@@ -46,6 +45,8 @@ class RomanNumerals {
     private int number;
     private String roman;
     private LinkedHashMap<String, Integer> romanSet;
+    private static final int MAX_RANGE = 3999;
+
 
     private void initMap() {
         romanSet = new LinkedHashMap<>();
@@ -98,7 +99,7 @@ class RomanNumerals {
         }
 
 
-        if (total > 3999) {
+        if (total > MAX_RANGE) {
             throw new NumberFormatException("not a legal Roman numeral");
         }
         this.number = total;
@@ -106,10 +107,11 @@ class RomanNumerals {
 
     RomanNumerals(int number) {
         initMap();
-        if (number < 1 || number > 3999) {
+        if (number < 1 || number > MAX_RANGE) {
             throw new NumberFormatException("int is outside the range 1 to 3999");
         }
         this.number = number;
+        toArabic();
     }
 
     /**
@@ -143,6 +145,10 @@ class RomanNumerals {
      */
     @Override
     public String toString() {
+        return roman;
+    }
+
+    private void toArabic() {
         StringBuilder temp = new StringBuilder();
         int num = number;
 
@@ -152,7 +158,7 @@ class RomanNumerals {
                 temp.append(entry.getKey());
             }
         }
-        return temp.toString();
+        this.roman = temp.toString();
     }
 
     /**
