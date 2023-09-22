@@ -28,11 +28,10 @@ public class Exercise2 {
             if (input.isEmpty() || input.isBlank()) {
                 break;
             }
-
             try {
                 BigInteger bigInteger = new BigInteger(input);
                 logger.info("count = {}", sequence3N_1(bigInteger));
-            } catch (ArithmeticException | IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 logger.warn("warn : {}", e.getMessage());
             }
         }
@@ -41,22 +40,19 @@ public class Exercise2 {
     /**
      * .3N+1 sequence
      *
-     * @param N BigInteger
+     * @param n BigInteger
      * @return 사용자의 입력 N이 legal이면 수열의 항 수를 출력합니다.
      */
-    private static int sequence3N_1(BigInteger N) {
+    private static int sequence3N_1(BigInteger n) {
         int count = 0;
-        if (N.compareTo(BigInteger.ZERO) < 0) {
+        if (n.compareTo(BigInteger.ZERO) < 0) {
             throw new IllegalArgumentException("smaller than 0s");
         }
-        if (N.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0) {
-            throw new ArithmeticException("bigger than max value");
-        }
-        while (N.compareTo(BigInteger.ONE) != 0) {
-            if (!N.testBit(0)) {  // If N is even...
-                N = N.divide(BigInteger.TWO);
+        while (n.compareTo(BigInteger.ONE) != 0) {
+            if (!n.testBit(0)) {  // If N is even...
+                n = n.divide(BigInteger.TWO);
             } else {
-                N = N.multiply(BigInteger.valueOf(3)).add(BigInteger.ONE);
+                n = n.multiply(BigInteger.valueOf(3)).add(BigInteger.ONE);
             }
             count++;
         }
