@@ -1,6 +1,5 @@
 package org.nhnacademy.minju;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,11 +20,11 @@ public class Exercise1 {
         double n1;
         double n2;
         double n3;
-        String input;
+        String input = "";
 
-        try {
-            do {
-                logger.info("Enter equation");
+        do {
+            logger.info("Enter equation");
+            try {
                 logger.info("A = ");
                 n1 = scanner.nextDouble();
                 logger.info("B = ");
@@ -33,14 +32,15 @@ public class Exercise1 {
                 logger.info("C = ");
                 n3 = scanner.nextDouble();
 
-                root(n1, n2, n3);
+                logger.info("{}", root(n1, n2, n3));
 
-                logger.info("Want to Enter another equation?");
-                input = scanner.nextLine();
-            } while (!input.equals("no"));
-        } catch (InputMismatchException e) {
-            logger.warn("equation input should be type double");
-        }
+            } catch (IllegalArgumentException e) {
+                logger.warn("{}", e.getMessage());
+                continue;
+            }
+            logger.info("Want to Enter another equation? (yes / no)");
+            input = scanner.nextLine();
+        } while (!input.equals("no"));
     }
 
     /**
