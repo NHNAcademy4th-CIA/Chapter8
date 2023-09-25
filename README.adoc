@@ -1,0 +1,74 @@
+= Chapter 8 프로그래밍 문제 및 퀴즈 정의
+
+=== link:https://math.hws.edu/javanotes/c8/exercises.html[Programing Exercise For Chapter 8]
+
+---
+
+==  Chapter 8 Quiz
+
+* Question 2:
+What is a precondition?
+Give an example.
+
+.Answer
+[%collapsible%open]
+====
+메서드나 생성자의 인자가 유효한지를 검증하는 것이다.
+
+postCondition 은 메서드나 생성자 실행 후의 결과의 유효성을 검증하는 것이다.
+
+preCondition
+
+Ex) 나눗셈 연산을 할때 나누는 숫자가 0이 면 안된다.
+
+postCondition
+
+Ex) finbonacci(5) 가 올바른 값을 반환한다.
+
+
+====
+
+* Question 5:
+
+Java has a predefined class called Throwable.
+What does this class represent? +
+Why does it exist?
+
+.Answer
+[%collapsible%open]
+====
+모든 예외 클래스는 Throwable 의 SubType입니다.
+
+따라서 예외처리를 할 때에 new 를 통해서 해당하는 예외 Type의 Class를 던져주게 됩니다.
+====
+
+* Question 8:
+
+Some classes of exceptions are checked exceptions that require mandatory exception handling. +
+Explain what this means.
+
+.Answer
+[%collapsible%open]
+====
+
+Checked Exception 은 static time 에 잡히는 Exception 입니다.
+UnChecked Exception 은 dynamic time 에 잡히는 Exception 입니다.
+
+(Static time = Compile time)
+(dynamic time = run time)
+
+이 둘의 차이는 개발자가 정의 합니다.
+
+만약 해당하는 예외가 치명적이고 프로그램 실행에 지대한 영향을 준다면
+
+의무적으로 예외처리를 하게 함으로써 안전성을 높이는 목적으로 Checked Exception을 구성하고
+
+그렇지 않다면 사용자에게 자율성을 주어 의무적인 예외처리를 하지 않아도 되게 만드는 것입니다.
+
+====
+
+
+
+
+
+
