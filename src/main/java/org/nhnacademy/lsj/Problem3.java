@@ -21,14 +21,6 @@ public class Problem3 {
 
         Scanner sc = new Scanner(System.in);
 
-        // 문자가 서로 연결되면 값이 합산된다
-
-
-        // 더 작은 값의 문자뒤에 더 큰값의 문자가 오면 큰값에서 작은 값을 뺀다.
-
-        // IV 는 1 5 임 , 따라서 5-1 = 4 가된다.
-
-
         String number = sc.nextLine();
 
         RomanNumerals romanNumerals;
