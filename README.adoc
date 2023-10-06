@@ -2,6 +2,8 @@
 
 === link:https://math.hws.edu/javanotes/c8/exercises.html[Programing Exercise For Chapter 8]
 
+=== link:https://math.hws.edu/javanotes/c8/quiz.html[Quiz on Chapter 8]
+
 ---
 
 ==  Chapter 8 Quiz
