@@ -15,9 +15,9 @@ Give an example.
 .Answer
 [%collapsible%open]
 ====
-메서드나 생성자의 인자가 유효한지를 검증하는 것이다.
+메서드나 생성자의 인자가 유효한지를 검증하는 것입니다.
 
-postCondition 은 메서드나 생성자 실행 후의 결과의 유효성을 검증하는 것이다.
+postCondition 은 메서드나 생성자 실행 후의 결과의 유효성을 검증하는 것입니다.
 
 preCondition
 
